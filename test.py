@@ -4,7 +4,7 @@ import time
 import pyfirmata
 
 def calculateDistance(x):
-    return x * (480/180)
+    return abs((x / (450/180))- 180)
 
 
 def mainloop():
@@ -30,10 +30,10 @@ def mainloop():
         faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 
         for (x,y,w,h) in faces:
-            print("x: {}, y: {}, w: {}, h: {}".format(x, y, w, h))
+            #print("x: {}, y: {}, w: {}, h: {}".format(x, y, w, h))
             cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
-
-            distance = calculateDistance(x)
+            distance = int(calculateDistance(x))
+            print(distance)
             if (lastValue == 0 or lastValue != distance):
                 lastValue = distance
                 servo.write(distance)
@@ -45,7 +45,7 @@ def mainloop():
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-    
+
     cap.release()
     cv2.destroyAllWindows()
 
