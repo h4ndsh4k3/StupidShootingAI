@@ -17,6 +17,7 @@ def mainloop():
     iter.start()
 
     servo = board.get_pin("d:{}:s".format(9)) #connecting to a servo on port 9
+    servo.write(0)
 
     lastValue = 0
 
